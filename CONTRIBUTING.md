@@ -11,7 +11,8 @@ This project uses a Makefile to streamline common development tasks. Below are t
 - **make lint**: Run code quality checks on Python and Markdown files.
 - **make test**: Run the test suite to ensure your changes do not break anything.
 - **make build**: Build the application (if applicable).
-- **make serve**: Start the development server locally.
+- **make start**: Start all services using Docker Compose.
+- **make stop**: Stop all services started by Docker Compose.
 - **make clean**: Remove the virtual environment, caches, build artifacts, and other generated files. Use this if you encounter strange issues or want to reset your environment. This is especially helpful before reinstalling dependencies or when switching branches.
 - **make precommit**: Run all checks and formatting steps required before committing code. This target is designed to help you catch issues early and ensure code quality before pushing changes.
 
@@ -25,6 +26,55 @@ This project uses a Makefile to streamline common development tasks. Below are t
 6. Submit a pull request with a clear description of your changes.
 
 For any questions, please open an issue or reach out to the maintainers.
+
+## Docker Development
+
+### Running with Docker Compose
+
+This project includes Docker support for local development and production deployment:
+
+```sh
+# Copy environment template (optional)
+cp .env.example .env
+
+# Start services (app + database)
+make start
+
+# View logs
+docker compose logs -f
+
+# Stop services
+make stop
+```
+
+### Environment Files
+
+The project includes two environment file templates:
+
+- **`.env.example`**: Development configuration with all available options documented. Use this as your starting point:
+
+  ```sh
+  cp .env.example .env
+  ```
+  
+- **`.env.production`**: Production configuration template showing recommended production settings. Useful for:
+  - Documenting production requirements
+  - Local testing of production mode
+  - Manual production deployments
+
+**Important**: These files are primarily **documentation**. The `docker-compose.yml` contains sensible defaults (`${VAR:-default}`), so Docker Compose works without any `.env` file. However, using the templates improves clarity and makes local customization easier.
+
+**CI/CD Note**: When deploying via GitHub Actions or other CI/CD pipelines, environment variables come from your CI/CD secrets, not from `.env` files.
+
+### Testing Production Mode Locally
+
+```sh
+cp .env.production .env
+# Edit .env with test credentials
+make start
+```
+
+This runs the application in production mode (multiple workers, no hot-reload) while still on your local machine.
 
 ## Project Folder Structure
 
@@ -45,10 +95,10 @@ The main folders and files in this project are:
   - **diagrams/**: System and architecture diagrams.
   - **specs/**: API and system specifications.
 - **tests/**: Unit and integration tests.
-- **Makefile**: Common development commands.
-- **requirements.txt**: Python dependencies.
-- **README.md**: Project overview and setup instructions.
 - **CONTRIBUTING.md**: Contribution guidelines (this file).
+- **Makefile**: Common development commands.
+- **README.md**: Project overview and setup instructions.
+- **requirements.txt**: Python dependencies.
 
 This structure is designed to keep code organized and maintainable as your FastAPI service grows. The `app/repositories/` folder is recommended for encapsulating all database access logic, keeping it separate from business logic and models.
 
