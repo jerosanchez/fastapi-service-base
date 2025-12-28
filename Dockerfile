@@ -1,4 +1,4 @@
-FROM python:3.12-slim as builder
+FROM python:3.13-slim as builder
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -12,7 +12,7 @@ RUN pip install --no-cache-dir --user .
 
 # ----------------------------------------
 
-FROM python:3.12-slim as runner
+FROM python:3.13-slim as runner
 
 # Create non-root user for security
 RUN useradd -m -u 1000 appuser && \
