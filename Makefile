@@ -1,8 +1,8 @@
 install:
 	@echo "Installing application..."
-	@python3 -m venv .venv
+	@python3.13 -m venv .venv
 	@. .venv/bin/activate && \
-		pip install --upgrade -r requirements.txt
+		pip install .
 
 format:
 	@echo "Formatting code..."
