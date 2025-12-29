@@ -22,7 +22,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: fastapi-app
+    container_name: fastapi-service
     environment:
       DEBUG: ${DEBUG:-true}
       APP_NAME: ${APP_NAME:-MyApp}
