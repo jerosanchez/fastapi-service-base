@@ -121,6 +121,9 @@ Next, configure Alembic to use your application's database settings. Open `alemb
 from app.core.config import config
 from app.db.engine import Base
 
+# Disable lint errors for this Alembic (third-party)
+# pylint: disable=no-member
+
 target_metadata = Base.metadata
 
 # Set the SQLAlchemy URL dynamically from your app settings
